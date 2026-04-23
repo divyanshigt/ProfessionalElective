@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from google import genai
 import os
+import requests
 import joblib
 import numpy as np
 from io import BytesIO
@@ -76,6 +78,9 @@ performance_model = joblib.load(os.path.join(sp_base, "performance_model.pkl"))
 scaler = joblib.load(os.path.join(sp_base, "scaler.pkl"))
 label_encoder = joblib.load(os.path.join(sp_base, "label_encoder.pkl"))
 
+
+# Gemini Client
+gemini_client = genai.Client(api_key="AIzaSyBoWefRQbubvxO2XqnP8WQyQtbV6AB2HL8")
 
 @app.route("/api/health", methods=["GET"])
 def health():
@@ -541,19 +546,109 @@ def student_performance():
             "error": "Student performance prediction failed",
             "details": str(e)
         }), 500
-
-
 # =========================
 # AI Assistant
 # =========================
 @app.route("/api/assistant/query", methods=["POST"])
 def assistant_query():
-    data = request.get_json() or {}
-    query = data.get("query", "")
+    try:
+        data = request.get_json() or {}
+        query = str(data.get("query", "")).strip()
 
-    return jsonify({
-        "response": f"AI Academic Assistant response for: {query}"
-    })
+        if not query:
+            return jsonify({"response": "Please enter a question."}), 400
+
+        try:
+            # Gemini AI call
+            response = gemini_client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=(
+                    "You are StudentPlus AI, a modern AI assistant for students.\n\n"
+                    "Your job:\n"
+                    "- Help with academics, GPA improvement, placements, internships, resume, projects.\n"
+                    "- Answer in clean markdown.\n"
+                    "- Use headings, bullet points, short paragraphs.\n"
+                    "- Be practical and clear.\n\n"
+                    f"User question: {query}"
+                ),
+            )
+
+            answer = getattr(response, "text", None)
+
+            if answer:
+                return jsonify({"response": answer})
+
+        except Exception as gemini_error:
+            print("Gemini error:", gemini_error)
+
+            q = query.lower()
+
+            # ===== SMART FALLBACKS =====
+            if "gpa" in q or "study" in q or "academic" in q:
+                fallback = (
+                    "## 🎓 Improve Your GPA\n\n"
+                    "- Study **daily** (avoid last-minute cramming)\n"
+                    "- Revise notes within **24 hours**\n"
+                    "- Solve **PYQs + practice questions**\n"
+                    "- Focus on **weak subjects first**\n"
+                    "- Maintain **sleep + consistency**\n\n"
+                    "👉 Small daily effort = big GPA boost 🚀"
+                )
+
+            elif "resume" in q:
+                fallback = (
+                    "## 📄 Improve Your Resume\n\n"
+                    "- Add **strong projects with results**\n"
+                    "- Mention **skills + internships**\n"
+                    "- Add **GitHub & LinkedIn links**\n"
+                    "- Use **ATS keywords**\n\n"
+                    "👉 Clean resume = more shortlist calls 💼"
+                )
+
+            elif "placement" in q:
+                fallback = (
+                    "## 💼 Placement Preparation\n\n"
+                    "- Practice **DSA daily**\n"
+                    "- Improve **aptitude + communication**\n"
+                    "- Build **2–3 solid projects**\n"
+                    "- Prepare for **HR + technical interviews**\n\n"
+                    "👉 Consistency > Talent 🔥"
+                )
+
+            elif "internship" in q:
+                fallback = (
+                    "## 🚀 Get Better Internships\n\n"
+                    "- Build **domain-specific projects**\n"
+                    "- Improve **resume quality**\n"
+                    "- Apply on **LinkedIn + Internshala**\n"
+                    "- Match **skills with job role**\n\n"
+                    "👉 Smart applying increases chances 📈"
+                )
+
+            else:
+                fallback = (
+                    "## 🤖 StudentPlus AI\n\n"
+                    "Live AI is currently under **high demand** ⚠️\n\n"
+                    "You can still ask about:\n"
+                    "- 🎓 Academics\n"
+                    "- 💼 Placements\n"
+                    "- 📄 Resume\n"
+                    "- 🚀 Internships\n"
+                    "- 🧠 Career guidance\n\n"
+                    "👉 Try a more specific question!"
+                )
+
+            return jsonify({"response": fallback})
+
+        return jsonify({
+            "response": "No response returned from AI."
+        }), 500
+
+    except Exception as e:
+        return jsonify({
+            "error": "Assistant failed",
+            "details": str(e)
+        }), 500
 # =========================
 # Placement Dashboard Data
 # =========================

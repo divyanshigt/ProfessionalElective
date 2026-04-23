@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-
+import BrandLogo from "../components/common/BrandLogo";
 const Overview = () => {
   const [dashboardData, setDashboardData] = useState({
     risk: null,
@@ -196,25 +196,37 @@ const Overview = () => {
   return (
     <div className="text-white">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8 flex items-start justify-between gap-4">
-          <div>
-            <p className="mb-2 inline-block rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-300">
-              Unified AI Dashboard
-            </p>
-            <h1 className="bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-400 bg-clip-text text-4xl font-extrabold text-transparent">
-              Student Intelligence Overview
-            </h1>
-            <p className="mt-3 max-w-3xl text-slate-300">
-              One smart dashboard combining academic risk, student performance,
-              career prediction, resume analysis, internship recommendation, and
-              placement readiness.
-            </p>
-          </div>
+<div className="mb-8 flex items-start justify-between gap-4">
+  <div>
+    <div className="mb-4">
+      <BrandLogo
+        size="md"
+        showText={false}
+        animated={true}
+        glow={true}
+        glass={true}
+      />
+    </div>
 
-          <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-300">
-            {summary.completionCount}/6 Modules Active
-          </div>
-        </div>
+    <p className="mb-2 inline-block rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-300">
+      Unified AI Dashboard
+    </p>
+
+    <h1 className="bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-400 bg-clip-text text-4xl font-extrabold text-transparent">
+      Student Intelligence Overview
+    </h1>
+
+    <p className="mt-3 max-w-3xl text-slate-300">
+      One smart dashboard combining academic risk, student performance,
+      career prediction, resume analysis, internship recommendation, and
+      placement readiness.
+    </p>
+  </div>
+
+  <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-300">
+    {summary.completionCount}/6 Modules Active
+  </div>
+</div>
 
         <div className="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {topCards.map((card) => (

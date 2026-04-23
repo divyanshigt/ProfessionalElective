@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 🎓 StudentPlus AI – Intelligent Student Analytics Platform
 
@@ -228,3 +229,7 @@ to deliver real-world impact and industry-level experience.
 
 ⭐ If you like this project, give it a star!
 
+=======
+# ProfessionalElective
+mse2
+>>>>>>> recover-work
