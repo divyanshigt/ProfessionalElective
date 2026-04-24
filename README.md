@@ -201,7 +201,7 @@ AI Assistant| "/api/assistant/query"
 
 - Kavin Gupta
 - Happy Saini
-- Divyanshi Gupts
+- Divyanshi Gupta
 - Anchal Yadav
 
 ---
