@@ -18,7 +18,7 @@ const Analytics = () => {
   }, []);
 
   if (!data) {
-    return <div className="text-white">Loading institutional analytics...</div>;
+    return <div className="text-white">Loading institute analytics dashboard...</div>;
   }
 
   return (
@@ -30,10 +30,10 @@ const Analytics = () => {
               Institutional Analytics
             </p>
             <h1 className="bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-400 bg-clip-text text-4xl font-extrabold text-transparent">
-              Placement & Institute Analytics
+              Placement and Institute Analytics
             </h1>
             <p className="mt-3 max-w-3xl text-slate-300">
-              Institutional placement intelligence dashboard built from the provided placement data.
+              An institute-level placement analytics dashboard built using the provided placement data.
             </p>
           </div>
 

@@ -7,7 +7,7 @@ const Assistant = () => {
     {
       role: "assistant",
       content:
-        "Hello! Ask me about resume improvement, career path, internships, academic risk, or placement readiness.",
+        "Hello! You can ask me about resume improvement, career paths, internships, academic performance, or placement readiness.",
     },
   ]);
   const [loading, setLoading] = useState(false);

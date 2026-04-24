@@ -77,7 +77,7 @@ export default function Login() {
           </button>
 
           <div className="text-center text-[11px] text-sp-muted">
-            Demo mode: press Sign In to enter directly
+            Demo mode: click Sign In to continue
           </div>
         </div>
 
