@@ -202,7 +202,7 @@ const Overview = () => {
               Unified AI Dashboard
             </p>
             <h1 className="bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-400 bg-clip-text text-4xl font-extrabold text-transparent">
-              Student Intelligence Overview
+              Student Performance Intelligence Overview
             </h1>
             <p className="mt-3 max-w-3xl text-slate-300">
               One smart dashboard combining academic risk, student performance,
@@ -242,7 +242,7 @@ const Overview = () => {
           <div className="space-y-6">
             <div className="rounded-3xl border border-white/10 bg-white/10 p-6 shadow-2xl backdrop-blur-xl">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-                Overall Student Health
+                Overall Academic Health Score
               </p>
 
               <div className="mt-6 flex items-center gap-6">
